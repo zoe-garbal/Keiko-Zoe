@@ -3,12 +3,15 @@ interface PokemonProps {
   id: number
 }
 
+export function filterPokemonsByName(pokemons: PokemonProps[], name: string): PokemonProps[] {
+  return pokemons.filter(pokemon => pokemon.name.includes(name))
+}
+
 export const Pokemon = ({ name, id }: PokemonProps) => {
   const image = {
     src: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
     alt: name,
   }
-  console.log(name)
 
   return (
     <div>
