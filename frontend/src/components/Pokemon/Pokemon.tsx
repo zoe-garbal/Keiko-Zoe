@@ -8,6 +8,7 @@ export const Pokemon = ({ name, id }: PokemonProps) => {
     src: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
     alt: name,
   }
+  console.log(name)
 
   return (
     <div>
