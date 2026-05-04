@@ -32,12 +32,11 @@ export const Home = () => {
 
   return (
     <div className={styles.intro}>
-      <div>Bienvenue sur ton futur pokédex !</div>
-      <div>Tu vas pouvoir apprendre tout ce qu'il faut sur React et attraper des pokemons !</div>
+      <div>Pokedex!</div>
       <input className={styles.input} onChange={onInputChange} value={filterValue} />
       <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        {filteredPokemons.map(({ name, id }) => (
-          <Pokemon key={id} name={name} id={id} />
+        {filteredPokemons.map(({ name, id, weight, height }) => (
+          <Pokemon key={id} name={name} id={id} weight={weight} height={height} />
         ))}
       </div>
     </div>
