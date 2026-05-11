@@ -1,6 +1,7 @@
 import styles from "./Home.module.css"
 import { Pokemon, filterPokemonsByName } from "../../components/Pokemon"
 import React, { useEffect } from "react"
+import { Loader } from "../../components/Loader"
 
 interface PokemonInfo {
   id: number
@@ -15,8 +16,8 @@ function fetchPokemons() {
 
 export const Home = () => {
   const [filterValue, setFiltervalue] = React.useState("")
-
   const [pokemonList, updatePokemonList] = React.useState<PokemonInfo[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFiltervalue(event.target.value)
@@ -27,7 +28,10 @@ export const Home = () => {
   useEffect(() => {
     fetchPokemons()
       .then(response => response.json())
-      .then(pokemonData => updatePokemonList(pokemonData))
+      .then(pokemonData => {
+        updatePokemonList(pokemonData)
+        setIsLoading(false)
+      })
   }, [])
 
   return (
@@ -35,9 +39,15 @@ export const Home = () => {
       <div>Pokedex!</div>
       <input className={styles.input} onChange={onInputChange} value={filterValue} />
       <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        {filteredPokemons.map(({ name, id, weight, height }) => (
-          <Pokemon key={id} name={name} id={id} weight={weight} height={height} />
-        ))}
+        {isLoading ? (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+            <Loader />
+          </div>
+        ) : (
+          filteredPokemons.map(({ name, id, weight, height }) => (
+            <Pokemon key={id} name={name} id={id} weight={weight} height={height} />
+          ))
+        )}
       </div>
     </div>
   )
